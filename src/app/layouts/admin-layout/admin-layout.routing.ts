@@ -12,6 +12,8 @@ import { TagsMasterComponent } from '../../tags-master/tags-master.component';
 import { BatchMasterComponent } from '../../batch-master/batch-master.component';
 import { FurnaceDashboardComponent } from '../../furnace-dashboard/furnace-dashboard.component';
 import { MeterhistoryComponent } from '../../meterhistory/meterhistory.component';
+import { EnergyconsumptionComponent } from '../../energyconsumption/energyconsumption.component';
+import { BatchdataComponent } from '../../batchdata/batchdata.component';
 export const AdminLayoutRoutes: Routes = [
    // { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
@@ -24,7 +26,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'machine',component:MachineMasterComponent ,canActivate: [AuthGuard] },
     { path: 'tags',component:TagsMasterComponent ,canActivate: [AuthGuard] },
     { path: 'batch',component:BatchMasterComponent ,canActivate: [AuthGuard] },
-    { path: 'meterhistory',component:MeterhistoryComponent ,canActivate: [AuthGuard] }
+    { path: 'meterhistory',component:MeterhistoryComponent ,canActivate: [AuthGuard] },
+    { path: 'energy',component:EnergyconsumptionComponent ,canActivate: [AuthGuard] },
+    { path: 'batchdata',component:BatchdataComponent ,canActivate: [AuthGuard] }
 
 
 ];

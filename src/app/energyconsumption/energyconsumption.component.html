@@ -1,0 +1,48 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+      <div class="header-body">
+        <!-- Card stats -->
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+            <div class="card card-stats mb-2 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <label for="dateValue" class="form-control">From : </label>
+                      <input [owlDateTimeTrigger]="dt" [owlDateTime]="dt" [(ngModel)]="dateValue" class="form-control">
+                      <owl-date-time [pickerMode]="'dialog'" #dt></owl-date-time>
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                      </div>
+                    </div>
+                  </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <label for="dateValue1" class="form-control">To : </label>
+                      <input [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" [(ngModel)]="dateValue1" class="form-control">
+                      <owl-date-time [pickerMode]="'dialog'" #dt1></owl-date-time>
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                      </div>
+                    </div>
+                  </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <label for="dateValue1" class="form-control">Machine </label>
+                      <select class="form-control" placeholder="MachineName" [(ngModel)]='machineno' id="machineno" name="machineno" *ngIf="MachineData" >
+                        <option *ngFor="let machine of MachineData" [value]="machine.friendly_name">{{machine.machine_name}}</option> 
+                    </select>
+                    </div>
+                  </div>&nbsp;&nbsp;&nbsp;&nbsp;               
+                  <div class="text-center">
+                    <button type="button" class="btn btn-primary" (click)="showData()">Search</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+</div>
