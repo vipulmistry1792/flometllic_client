@@ -1,0 +1,183 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" >
+    <!-- Mask -->
+    <span class="mask bg-gradient-danger opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid  align-items-center">
+      <div class="row">
+          <!-- <h1 class="display-2 text-white">Machine Master</h1> -->
+          <div class="col-xl-6 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0 col-xl-12">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Furnace Name :</h5>
+                    <span class="text-nowrap customtextsize"  *ngIf="timedata">{{timedata.machine_name}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="col-xl-6 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body" [ngClass]="{'bg-success': timedata.batchno != '','bg-danger': timedata.batchno == 'Ideal' }">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Heat No :</h5>
+                  <span class="text-nowrap customtextsize text-white" *ngIf="timedata">{{timedata.batchno}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="container-fluid mt--7">
+    <div class="row">
+    <div class="col-xl-4 mb-5 mb-xl-0" >
+        <div class="card  shadow" >
+        <div class="card-header bg-transparent">
+            <h1 class="text-center">Time</h1>
+        </div>
+        <div class="card-body" id="time" >
+            <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                    <tbody *ngIf="timedata">
+                        <tr>
+                            <td class="font-weight-bold">Start Time :</td>
+                            <td class="customtextsize">{{timedata.batchstarttime | date:'dd-MM-YY hh:mm:ss':locale}}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Standard Time :</td>
+                            <td class="customtextsize">{{timedata.stdbatchtime}} Min.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Running Time :</td>
+                            <td class="customtextsize">{{timedata.running_time}} Min.</td>
+                        </tr>
+                        <tr [ngClass]="{'': remaintime >= 0,'bg-danger': remaintime < 0 }">
+
+                            <td class="font-weight-bold" >Remaining Time :</td>
+                            <td class="customtextsize" >{{remaintime}} Min.</td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col-xl-4 mb-5 mb-xl-0">
+        <div class="card  shadow">
+        <div class="card-header bg-transparent">
+            <h1 class="text-center">Energy</h1>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                    <!-- <thead class="thead-light">
+                    <tr>
+                         <th scope="col">                           
+                          </th>
+                          <th scope="col">                            
+                          </th>
+                    </tr>
+                    </thead> -->
+                    <tbody *ngIf="timedata">
+                        <tr>
+                            <td class="font-weight-bold">Set Energy :</td>
+                            <td class="customtextsize">{{timedata.kwh}} Kwh</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold" >Actual Energy :</td>
+                            <td class="customtextsize" *ngIf="Energydata">{{Energydata.energy}} Kwh</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Today Energy :</td>
+                            <td class="customtextsize">    Kwh</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">-</td>
+                            <td class="customtextsize">   </td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col-xl-4 mb-5 mb-xl-0">
+        <div class="card  shadow">
+        <div class="card-header bg-transparent">
+            <h1 class="text-center">General</h1>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                    <tbody >
+                        <tr>
+                            <td class="font-weight-bold">Running Heat No :</td>
+                            <td class="customtextsize" *ngIf="timedata"> {{timedata.batchno}}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Running Shift :</td>
+                            <td class="customtextsize"></td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Current Shift Heat :</td>
+                            <td class="customtextsize"></td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Today Total Heat :</td>
+                            <td class="customtextsize"></td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Ideal Energy :</td>
+                            <td class="customtextsize"></td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col-xl-4 mb-5 mb-xl-0">
+        <div class="card  shadow">
+        <div class="card-header bg-transparent">
+            <h1 class="text-center">Maintenance</h1>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                    <tbody >
+                        <tr>
+                            <td class="font-weight-bold">Date Of Lining :</td>
+                            <td class="customtextsize"></td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Patching Heat :</td>
+                            <td class="customtextsize"></td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Lining :</td>
+                            <td class="customtextsize"></td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">TotalHeat :</td>
+                            <td class="customtextsize"></td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td class="customtextsize"></td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>

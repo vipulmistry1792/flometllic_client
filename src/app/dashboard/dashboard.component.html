@@ -1,0 +1,507 @@
+
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+        <div class="table-responsive">
+          <!-- <div>
+            Toggle column: <a class="toggle-vis"  *ngFor="let data of headings; let i = index" data-column="i" (click)="showhide(index)">{{data}}</a>
+         </div> -->
+        <table  class="table  table-striped align-items-center table-flush" datatable dtOptions>
+          <thead class="thead-dark">
+            <tr>
+              <td class="wrappable" *ngFor="let data of headings; let i = index">
+                {{data}}
+              </td>
+           
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <ng-container *ngFor="let data of datas | slice:1; let i = index;">  
+              <tr *ngIf="user.gender == 'male'">
+                <td>{{user.name}}</td>
+                <td>{{user.gender}}</td>
+              </tr>
+            </ng-container> -->
+
+            <tr *ngFor="let data of datas | slice:1; let i = index;">
+              <td  class="wrappable" *ngFor="let data1 of data; let j = index">
+                {{data1}}
+              </td>
+              <!-- <template *ngFor="let data1 of data; let j = index">
+                <td  *ngIf="this.column_array.indexOf(j) > -1">{{data1}}</td>
+              </template> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+      <div class="header-body" >
+        <!-- Card stats -->
+       <div class="row d-flex justify-content-center" >
+        <button type="button" class="btn btn-primary" (click)="httpRequest()">Refresh <i class="fa fa-spinner fa-spin" *ngIf="loading"></i></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt--7">
+    <div class="row mt-5">
+      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0" style="background-color: #2C3A47;">
+            <div class="row align-items-center " >
+              <div class="col">
+                <h3 class="mb-0 text-white">Project Activity</h3>
+              </div>
+              <div class="col text-right">
+                <!-- <a [routerLink]="" (click)="open('Vipul','','')" class="btn btn-sm btn-primary">View Data</a> -->
+              </div>
+            </div>
+          </div>
+          <div  *ngIf="mqtt_lastdata">
+            <!-- Projects table -->
+            <table class="table  align-items-center table-flush font-weight-bold">
+              <thead class="text-white" style="background-color: #2C3A47;">
+                <tr >
+                  <th scope="col">Description</th>
+                  <th scope="col">Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-white" style="background-color: #2C3A47;">
+                  <th scope="row" (click)="open(mymodal,'ongoing')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                    OnGoing
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'ongoing')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.Ongoing}}
+                    </div>
+                  </td>
+                </tr>
+                <!-- <tr class="text-white" style="background-color: #2C3A47;" [ngClass]="{'blink': mqtt_lastdata.No_Clearence > 0}">
+                  <th scope="row" (click)="open(mymodal,'no clearance')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                    No Clearance
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'no clearance')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                     <span> {{mqtt_lastdata.No_Clearence}}</span>
+                    </div>
+                  </td>
+                </tr> -->
+
+                <tr class="text-white" style="background-color: #2C3A47;">
+                  <th scope="row" (click)="open(mymodal,'Software Developemnt')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                    Software Development
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'Software Developemnt')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                      {{mqtt_lastdata.Software_Developement}}
+                    </div>
+                  </td>
+                </tr>
+                <tr class="text-white" style="background-color: #2C3A47;">
+                  <th scope="row">
+                   -
+                  </th>
+                  <td>
+                    <div class="col-auto">
+                      -
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0  text-white" style="background-color: #8e44ad;">
+            <div class="row align-items-center">
+              <div class="col" >
+                <h3 class="mb-0 text-white">Trading Order</h3>
+              </div>
+              <div class="col text-right">
+                <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
+              </div>
+            </div>
+          </div>
+          <div  *ngIf="mqtt_lastdata">
+            <!-- Projects table -->
+            <table class="table  align-items-center table-flush font-weight-bold">
+              <thead class="text-white" style="background-color: #8e44ad;">
+                <tr class="">
+                  <th scope="col">Description</th>
+                  <th scope="col">Qty</th>
+                  <th scope="col" colspan="2">-</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-white" style="background-color: #8e44ad;">
+                  <th scope="row" >
+                    Pending of 20-21
+                  </th>
+                  <td>
+                    <div class="row" (click)="open(mymodal,'trdpendlast')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.pending_last}}
+                    </div>
+                  </td>
+                  <td colspan="2">
+                    <div class="row" >
+                        
+                    </div>
+                  </td>
+                </tr>
+                <tr class="text-white" style="background-color: #8e44ad;">
+                  <th scope="row">
+                    Completed of 20-21
+                  </th>
+                  <td>
+                    <div class="row" (click)="open(mymodal,'trdcomplast')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                      {{mqtt_lastdata.Complete_last}}
+                    </div>
+                  </td>
+                  <td colspan="2">
+                    <div class="row" >
+                       
+                    </div>
+                  </td>
+                </tr>
+                <tr class="text-white" style="background-color: #8e44ad;">
+                  <th scope="row">
+                    Pending of 21-22
+                  </th>
+                  <td>
+                    <div class="row" (click)="open(mymodal,'trdpendcurr')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.pending_curr}}
+                    </div>
+                  </td>
+                  <td colspan="2">
+                    <div class="row" >
+                       
+                    </div>
+                  </td>
+                </tr>
+                <tr class="text-white" style="background-color: #8e44ad;">
+                  <th scope="row">
+                    Completed of 21-22
+                  </th>
+                  <td>
+                    <div class="row" (click)="open(mymodal,'trdcompcurr')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                      {{mqtt_lastdata.Complete_curr}}
+                    </div>
+                  </td>
+                  <td colspan="2">
+                    <div class="row" >
+                       
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row mt-5">
+      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0 text-white" style="background-color: #0581B9;">
+            <div class="row align-items-center ">
+              <div class="col">
+                <h3 class="mb-0 text-white">Customer Feedback  (Last 1 Week)</h3>
+              </div>
+              <div class="col text-right">
+                <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
+              </div>
+            </div>
+          </div>
+          <div  *ngIf="mqtt_lastdata">
+            <!-- Projects table -->
+            <table class="table  align-items-center table-flush font-weight-bold">
+              <thead class="text-white" style="background-color: #0581B9;">
+                <tr >
+                  <th scope="col">Description</th>
+                  <th scope="col">Ok</th>
+                  <th scope="col">Not-Ok</th>
+                </tr>
+              </thead>
+              <tbody class="text-white">
+                <tr style="background-color: #0581B9;">
+                  <th scope="row">
+                    Project
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'projectok')">
+                        {{mqtt_lastdata.project_ok}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'projectnotok')">
+                        {{mqtt_lastdata.project_notok}}
+                    </div>
+                  </td>
+                </tr>
+                <tr style="background-color: #0581B9;">
+                  <th scope="row">
+                    Service
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'serviceok')">
+                        {{mqtt_lastdata.service_ok}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'servicenotok')">
+                        {{mqtt_lastdata.service_notok}}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0" style="background-color: #596275;">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0 text-white">Invoice Details Summary</h3>
+              </div>
+              <div class="col text-right">
+                <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
+              </div>
+            </div>
+          </div>
+          <div  *ngIf="mqtt_lastdata">
+            <!-- Projects table -->
+            <table class="table  align-items-center table-flush font-weight-bold">
+              <thead class="">
+                <tr class="text-white" style="background-color: #596275;">
+                  <th scope="col">-</th>
+                  <th scope="col" (click)="open(mymodal,'lastmonth')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details"> {{mqtt_lastdata.lmonth}}</th>
+                  <th scope="col" (click)="open(mymodal,'currentmonth')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">{{mqtt_lastdata.cmonth}}</th>
+                  <th scope="col" (click)="open(mymodal,'thisyear')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">ThisYear</th>
+                  <!-- <th scope="col">No of Bills LastMonth</th>
+                  <th scope="col">No of Bills CurrentMonth</th>
+                  <th scope="col">No of Bills ThisYear</th>                   -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-white" style="background-color: #596275;">
+                  <th scope="row">
+                    Bills Amount
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'lastmonth')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.lastmonnthInv}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'currentmonth')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.currmonthInv}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'thisyear')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.totInv}}
+                    </div>
+                  </td>
+                </tr>
+                <tr class="text-white" style="background-color: #596275;">
+                  <th scope="row">
+                    Bills Qty
+                  </th>
+                  <td>
+                    <div class="col-auto">
+                        {{mqtt_lastdata.noofbillslast}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto">
+                        {{mqtt_lastdata.noofbillscurrent}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto">
+                        {{mqtt_lastdata.totbills}}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row mt-5">
+      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0" style="background-color: #303952;">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0 text-white">Complaint Status</h3>
+              </div>
+              <div class="col text-right">
+                <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
+              </div>
+            </div>
+          </div>
+          <div  *ngIf="mqtt_lastdata">
+            <!-- Projects table -->
+            <table class="table  align-items-center table-flush font-weight-bold">
+              <thead class="">
+                <tr class="text-white" style="background-color: #303952;">
+                  <th scope="col">Description</th>
+                  <th scope="col">Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-white" style="background-color: #303952;">
+                  <th scope="row" (click)="open(mymodal,'opencomplain')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                   Open Complaint
+                  </th>
+                  <td >
+                    <div class="col-auto" (click)="open(mymodal,'opencomplain')" [ngClass]="{'blink': mqtt_lastdata.total_open_complain > 0}" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                       <sapn> {{mqtt_lastdata.total_open_complain}}</sapn>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="text-white" style="background-color: #303952;">
+                  <th scope="row" (click)="open(mymodal,'closecomplain')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                    Closed Complaint
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'closecomplain')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                      {{mqtt_lastdata.total_close_complain}}
+                    </div>
+                  </td>
+                </tr>
+                <!-- <tr class="text-white" style="background-color: #303952;">
+                  <th scope="row" (click)="open(mymodal,'closecomplain')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                    -
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'closecomplain')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        -
+                    </div>
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <!-- //  #1abc9c -->
+      <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0" style="background-color: #046B99;">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0 text-white">Pending Payment Summary</h3>
+              </div>
+              <div class="col text-right">
+                <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
+              </div>
+            </div>
+          </div>
+          <div  *ngIf="mqtt_lastdata">
+            <!-- Projects table  style="background-color: #786fa6;"-->
+            <table class="table  align-items-center table-flush font-weight-bold">
+              <thead class="">
+                <tr class="text-white" style="background-color: #046B99;">
+                  <th scope="col">-</th>
+                  <th scope="col" > {{mqtt_lastdata.lmonth}}</th>
+                  <th scope="col">{{mqtt_lastdata.cmonth}}</th>
+                  <th scope="col">ThisYear</th>
+                  <!-- <th scope="col">No of Bills LastMonth</th>
+                  <th scope="col">No of Bills CurrentMonth</th>
+                  <th scope="col">No of Bills ThisYear</th>                   -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-white" style="background-color: #046B99;">
+                  <th scope="row">
+                   Pending Amount
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'pendinglast')" [ngClass]="{'blink': mqtt_lastdata.lastpending_amt > 0}" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        <span>{{mqtt_lastdata.lastpending_amt}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'pendingcurrent')" [ngClass]="{'blink': mqtt_lastdata.currpending_amt > 0}" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        <span>{{mqtt_lastdata.currpending_amt}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'pendingyear')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.pending_amt}}
+                    </div>
+                  </td>
+                </tr>
+                <!-- <tr class="text-white" style="background-color: #046B99;">
+                  <th scope="row">
+                    Received Amount
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'receivelast')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.lastreceived_amt}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'receivecurrent')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.currreceived_amt}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'receiveyear')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.received_amt}}
+                    </div>
+                  </td>
+                </tr> -->
+                <tr class="text-white" style="background-color: #046B99;">
+                  <th scope="row">
+                    Critical Amount
+                  </th>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'criticallast')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.lastcritical_amt}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'criticalcurrent')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.currcritical_amt}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-auto" (click)="open(mymodal,'criticalyear')" data-toggle="tooltip" data-placement="top" title="Click Here To See Details">
+                        {{mqtt_lastdata.critical_amt}}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+

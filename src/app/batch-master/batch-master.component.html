@@ -1,0 +1,283 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" >
+    <!-- Mask -->
+    <span class="mask bg-gradient-danger opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+          <!-- <h1 class="display-2 text-white">Machine Master</h1> -->
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="container-fluid mt--7">
+        <div class="row">
+        <div class="col-xl-12 mb-5 mb-xl-0">
+            <div class="card  shadow">
+            <div class="card-header bg-transparent">
+
+                <!-- <div class="row align-items-center">
+                <div class="col">
+                    <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
+                    <h2 class="text-white mb-0">Sales value</h2>
+                </div>
+                <div class="col">
+                    <ul class="nav nav-pills justify-content-end">
+                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[0];updateOptions()">
+                        <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked===true}" data-toggle="tab" (click)="clicked=true;clicked1=false">
+                        <span class="d-none d-md-block">Month</span>
+                        <span class="d-md-none">M</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[1];updateOptions()">
+                        <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked1===true}" data-toggle="tab" (click)="clicked=false;clicked1=true">
+                        <span class="d-none d-md-block">Week</span>
+                        <span class="d-md-none">W</span>
+                        </a>
+                    </li>
+                    </ul>
+                </div>
+                </div> -->
+            </div>
+            <div class="card-body">
+                <div class="col-md-12 px-1">
+                    <div class="form-group">
+                      <label>Machine No</label>
+                      <select class="form-control" placeholder="MachineName" [(ngModel)]='machineno' id="machineno" name="machineno" *ngIf="MachineData" (change)="onMachineChange($event)">
+                          <option *ngFor="let machine of MachineData" [value]="machine.machineno">{{machine.machine_name}}</option> 
+                     </select>
+                      <!-- <input type="number" class="form-control" placeholder="Machineno"  id="machineno" name="machineno" [(ngModel)]="machineno" required> -->
+                    </div>
+                  </div>
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                        <label>Batchno</label>
+                        <input type="text" class="form-control" placeholder="Enetr Batchno"  id="batchno" name="batchno" [(ngModel)]='batchno' required>
+                      </div>
+                    </div>
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                        <label>Standard Batchtime(Min.)</label>
+                        <input type="number" class="form-control" placeholder="Enter Standard BatchTime"  id="batchtime" name="batchtime" [(ngModel)]="batchtime" required>
+                      </div>
+                    </div>
+                    <div class="col-md-12 px-1">
+                        <div class="form-group">
+                          <label>Set Energy</label>
+                          <input type="number" class="form-control" placeholder="Enter Set Kwh"  id="kwh" name="kwh" [(ngModel)]="kwh" required>
+                        </div>
+                      </div>
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                        <label>kwh/ton</label>
+                        <input type="number" class="form-control" placeholder="Enter KWH/TON"  id="kwh_ton" name="kwh_ton" [(ngModel)]="kwh_ton" required>
+                      </div>
+                    </div>
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                        <label>UpperLimit</label>
+                        <input type="number" class="form-control" placeholder="Enter Upperlimit"  id="upr_limit" name="upr_limit" [(ngModel)]="upr_limit" required>
+                      </div>
+                    </div>
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                        <label>Middle Limit</label>
+                        <input type="number" class="form-control" placeholder="Enter Middlelimit"  id="mdl_limit" name="mdl_limit" [(ngModel)]="mdl_limit" required>
+                      </div>
+                    </div>
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                        <label>Lower Limit</label>
+                        <input type="number" class="form-control" placeholder="Enter Lowerlimit"  id="lwr_limit" name="lwr_limit" [(ngModel)]="lwr_limit" required>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                          <button class="btn btn-success btn-round" (click)="AddData()" *ngIf="id === 0">Submit</button>
+                          <button class="btn btn-success btn-round" (click)="UpdateData()" *ngIf="id >= 1">Update</button>
+                      </div>
+                    </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="row mt-5" *ngIf="BatchData">
+            <div class="col-xl-12 mb-5 mb-xl-0">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                    <h3 class="mb-0 text-center">Batch Initial Data</h3>
+                    </div>
+                    <!-- <div class="col text-right">
+                    <a href="#!" class="btn btn-sm btn-primary"> all</a>
+                    </div> -->
+                </div>
+                </div>
+                <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                    <tr>
+                          <th scope="col">
+                             SrNo
+                          </th>
+                          <th>
+                            MachineName
+                          </th>
+                          <th scope="col">
+                            BatchNo
+                          </th>
+                          <th scope="col">
+                           Standard Batchtime
+                          </th>
+                          <th scope="col">
+                            Set Kwh
+                          </th>
+                          <th scope="col">
+                              Kwh/Ton
+                          </th>
+                          <th scope="col">
+                             Upper Limit
+                          </th>
+                          <th scope="col">
+                              Middle Limit
+                           </th>
+                           <th scope="col" >
+                              Lower Limit
+                           </th>
+                          <th scope="col" class="text-right">
+                            Created
+                          </th>
+                          <th scope="col" class="text-right">
+                            Modified
+                          </th>
+                          <th scope="col" class="text-right">
+                            Action
+                          </th>
+                        <!-- <th scope="col">Page name</th>
+                        <th scope="col">Visitors</th>
+                        <th scope="col">Unique users</th>
+                        <th scope="col">Bounce rate</th> -->
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let batch of BatchData">
+                        <tr >
+                             <th scope="row">
+                                {{batch.id}}
+                              </th>
+                              <td>
+                                {{batch.machineno}}
+                              </td>
+                              <td>
+                                {{batch.batchno}}
+                              </td>
+                              <td>
+                                {{batch.stdbatchtime}}
+                              </td>
+                              <td>
+                                {{batch.kwh}}
+                              </td>
+                              <td>
+                                {{batch.ton_kwh}}
+                              </td>
+                              <td>
+                                {{batch.UpperLimit}}
+                              </td>
+                              <td>
+                                {{batch.MiddleLimit}}
+                              </td>
+                              <td>
+                                {{batch.LowerLimit}}
+                              </td>
+                              <td class="text-right">
+                                {{batch.created}}
+                              </td>
+                              <td class="text-right">
+                                {{batch.modified}}
+                              </td>
+                              <td>
+                                <button type="button" class="btn btn-info btn-round btn-sm" (click)="Edit($event,batch.id)">Edit</button>
+                                <button type="button" class="btn btn-danger btn-round btn-sm" (click)="Delete($event,batch.id)">Delete</button>
+                              </td>
+                        </tr>
+                      </tbody>
+                    <!-- <tbody>
+                    <tr>
+                        <th scope="row">
+                        /argon/
+                        </th>
+                        <td>
+                        4,569
+                        </td>
+                        <td>
+                        340
+                        </td>
+                        <td>
+                        <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                        /argon/index.html
+                        </th>
+                        <td>
+                        3,985
+                        </td>
+                        <td>
+                        319
+                        </td>
+                        <td>
+                        <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                        /argon/charts.html
+                        </th>
+                        <td>
+                        3,513
+                        </td>
+                        <td>
+                        294
+                        </td>
+                        <td>
+                        <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                        /argon/tables.html
+                        </th>
+                        <td>
+                        2,050
+                        </td>
+                        <td>
+                        147
+                        </td>
+                        <td>
+                        <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                        /argon/profile.html
+                        </th>
+                        <td>
+                        1,795
+                        </td>
+                        <td>
+                        190
+                        </td>
+                        <td>
+                        <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                        </td>
+                    </tr>
+                    </tbody> -->
+                </table>
+                </div>
+            </div>
+            </div>
+        </div>
+</div>

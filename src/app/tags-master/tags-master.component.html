@@ -1,0 +1,273 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" >
+    <!-- Mask -->
+    <span class="mask bg-gradient-danger opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+          <!-- <h1 class="display-2 text-white">Machine Master</h1> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt--7">
+        <div class="row">
+        <div class="col-xl-12 mb-5 mb-xl-0">
+            <div class="card  shadow">
+            <div class="card-header bg-transparent">
+
+                <!-- <div class="row align-items-center">
+                <div class="col">
+                    <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
+                    <h2 class="text-white mb-0">Sales value</h2>
+                </div>
+                <div class="col">
+                    <ul class="nav nav-pills justify-content-end">
+                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[0];updateOptions()">
+                        <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked===true}" data-toggle="tab" (click)="clicked=true;clicked1=false">
+                        <span class="d-none d-md-block">Month</span>
+                        <span class="d-md-none">M</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[1];updateOptions()">
+                        <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked1===true}" data-toggle="tab" (click)="clicked=false;clicked1=true">
+                        <span class="d-none d-md-block">Week</span>
+                        <span class="d-md-none">W</span>
+                        </a>
+                    </li>
+                    </ul>
+                </div>
+                </div> -->
+            </div>
+            <div class="card-body">
+                <div class="col-md-12 px-1">
+                    <div class="form-group">
+                      <label>Communication Protocol</label>
+                      <select class="form-control" placeholder="Modbus type Select"   id="prototype" name="prototype"  [(ngModel)]='prototype'>
+                        <option value="Modbus RTU">Modbus RTU</option>
+                        <option value="Modbus TCP">Modbus TCP</option>
+                        <!-- <option value="OPCUA">OPCUA</option> -->
+                      </select>
+                      <!-- <input type="text" class="form-control" placeholder="Username" value="michael23"> -->
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="prototype != 'OPCUA'">
+                    <div class="form-group">
+                      <label>Function</label>
+                      <select class="form-control" placeholder="Modbus type Select"   id="dataread_type" name="dataread_type" [(ngModel)]='dataread_type'>
+                        <option value="1">Read Coil</option>
+                        <option value="2">Read Input</option>
+                        <option value="3">Read Holding Registers</option>
+                        <option value="4">Read Input Registers</option>
+                      </select>
+                      <!-- <input type="text" class="form-control" placeholder="Username" value="michael23"> -->
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="prototype === 'Modbus TCP' || prototype === 'OPCUA'">
+                    <div class="form-group">
+                      <label>Ip Address</label>
+                      <input type="text" class="form-control" placeholder="modbus protocol Ip Address , opc protocol opc.tcp://ipaddress:portno" id="device_add" name="device_add" type="text" [(ngModel)]="device_add">
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1">
+                    <div class="form-group">
+                      <label>Tag Name</label>
+                      <input type="text" class="form-control" placeholder="Tag Name" type="text" id="tag_name" name="tag_name" [(ngModel)]='tag_name'>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1">
+                    <div class="form-group">
+                      <label>Device Name</label>
+                      <!-- <input type="text" class="form-control" placeholder="Device Name" type="text" id="device_name" name="device_name" [(ngModel)]="device_name"> -->
+                      <select class="form-control" placeholder="Device Name" [(ngModel)]='device_name' id="device_name" name="device_name" *ngIf="MachineData">
+                        <option *ngFor="let machine of MachineData" [value]="machine.friendly_name">{{machine.machine_name}}</option> 
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1">
+                    <div class="form-group">
+                      <label>Slave Id</label>
+                      <input type="text" class="form-control" placeholder="Slave Id" type="text" id="device_id" name="device_id" [(ngModel)]="device_id">
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="prototype != 'OPCUA'">
+                    <div class="form-group">
+                      <label>Data Type</label>
+                      <select class="form-control" placeholder="Tag Type" [(ngModel)]='data_type' id="data_type" name="data_type" (change)="onTagChange()">
+                        <option value="Bool">Bool</option> 
+                        <option value="Int16">Int16</option>
+                        <option value="UInt16">UInt16</option>
+                        <option value="Int32">Int32</option>
+                        <option value="UInt32">UInt32</option>
+                        <option value="Float32">Float32</option>
+                        <option value="Float64">Float64</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="prototype != 'OPCUA'">
+                    <div class="form-group">
+                      <label>Start Address</label>
+                      <input type="text" class="form-control" placeholder="start_address" type="Number" id="start_address" name="start_address" [(ngModel)]='start_address'>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="prototype != 'OPCUA'">
+                    <div class="form-group">
+                      <label>Qty</label>
+                      <input type="text" class="form-control" placeholder="qty" type="Number" id="qty" name="qty" readonly [(ngModel)]='qty'>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="prototype == 'OPCUA'">
+                    <div class="form-group">
+                      <label>Node Station</label>
+                      <input type="text" class="form-control" placeholder=" Node Station" type="text" id="ns" name="ns"  [(ngModel)]='ns'>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="prototype == 'OPCUA'">
+                    <div class="form-group">
+                      <label>Node Id</label>
+                      <input type="text" class="form-control" placeholder="Tag Id" type="text" id="i" name="i"  [(ngModel)]='i'>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="prototype == 'OPCUA'">
+                    <div class="form-group">
+                      <label>Secure</label>
+                      <button  class="btn btn-defult form-control" (click)="Secure_Check()"><span>{{ secure }}</span></button>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="secure === 'Secure'">
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input type="text" class="form-control" placeholder=" username" type="text" id="username" name="username"  [(ngModel)]='username'>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1" *ngIf="secure === 'Secure'">
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="text" class="form-control" placeholder="password" type="password" id="password" name="password"  [(ngModel)]='password'>
+                    </div>
+                  </div>
+                  <div class="col-md-12 px-1">
+                    <div class="form-group">
+                        <button class="btn btn-success btn-round" (click)="AddData()" *ngIf="id === 0">Submit</button>
+                        <button class="btn btn-success btn-round" (click)="UpdateData()" *ngIf="id >= 1">Update</button>
+                    </div>
+                  </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-xl-12 mb-5 mb-xl-0">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                    <h3 class="mb-0 text-center">TagsData</h3>
+                    </div>
+                    <!-- <div class="col text-right">
+                    <a href="#!" class="btn btn-sm btn-primary"> all</a>
+                    </div> -->
+                </div>
+                </div>
+                <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                    <tr>
+                        <th  scope="col">
+                            SrNo
+                          </th>
+                          <th  scope="col">
+                            Communocation Protocol
+                          </th>
+                          <th  scope="col">
+                            TagName
+                          </th>
+                          <th  scope="col">
+                            Device Name
+                          </th>
+                          <th  scope="col" class="text-right">
+                            Device Ip
+                          </th>
+                          <th  scope="col" class="text-right">
+                            Slave Id
+                          </th>
+                          <th  scope="col" class="text-right">
+                            Read Address
+                          </th>
+                          <th  scope="col" class="text-right">
+                            Read Type
+                          </th>
+                          <th  scope="col" class="text-right">
+                            NodeStation
+                          </th>
+                          <th  scope="col" class="text-right">
+                            NodeID
+                          </th>
+                          <th  scope="col" class="text-right">
+                            Secure
+                          </th>
+                          <th  scope="col" class="text-right">
+                            Username
+                          </th>
+                          <th  scope="col" class="text-right">
+                            Password
+                          </th>
+                          <th  scope="col" class="text-right">
+                            Action
+                          </th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let tag_dt of Tags_Data">
+                        <tr >
+                            <th scope="row">
+                                {{tag_dt.Id}}
+                            </th>
+                              <td>
+                                {{tag_dt.Protocol}}
+                              </td>
+                              <td>
+                                {{tag_dt.TagName}}
+                              </td>
+                              <td>
+                                {{tag_dt.DeviceName}}
+                              </td>
+                              <td class="text-right">
+                                {{tag_dt.DeviceAdd}}
+                              </td>
+                              <td class="text-right">
+                                {{tag_dt.DeviceNo}}
+                              </td>
+                              <td class="text-right">
+                                {{tag_dt.StartAdd}}
+                              </td>
+                              <td class="text-right">
+                                {{tag_dt.DataType}}
+                              </td>
+                              <td class="text-right">
+                                {{tag_dt.NS}}
+                              </td>
+                              <td class="text-right">
+                                {{tag_dt.I}}
+                              </td>
+                              <td class="text-right">
+                                {{tag_dt.Secure}}
+                              </td>
+                              <td class="text-right">
+                                {{tag_dt.Username}}
+                              </td>
+                              <td class="text-right">
+                                {{tag_dt.Password}}
+                              </td>
+                              <td>
+                                <button type="button" class="btn btn-info btn-round btn-sm" (click)="Edit($event,tag_dt)">Edit</button>
+                                <button type="button" class="btn btn-danger btn-round btn-sm" (click)="Delete($event,tag_dt)">Delete</button>
+                              </td>
+                        </tr>
+                      </tbody>
+                </table>
+                </div>
+            </div>
+            </div>
+        </div>
+</div>
