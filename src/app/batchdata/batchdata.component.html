@@ -1,4 +1,4 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-dark pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
       <div class="header-body">
         <!-- Card stats -->
@@ -9,16 +9,18 @@
                 <div class="row">
                     <div class="form-group">
                         <!-- -alternative -->
-                        <div class="input-group input-group mb-3">
-                          <label for="dateValue1" class="form-control">Machine </label>
+                        <div class="input-group flex-nowrap mb-3">
+                          <span class="input-group-text" id="basic-addon1">Machine</span>&nbsp;&nbsp;
+                          <!-- <label for="dateValue1" class="form-control">Machine </label> -->
                           <select class="form-control" placeholder="MachineName" [(ngModel)]='machineno' id="machineno" name="machineno" *ngIf="MachineData" (change)="onMachineChange($event)">
                             <option *ngFor="let machine of MachineData" [value]="machine.friendly_name">{{machine.machine_name}}</option> 
                         </select>
                         </div>
                       </div>&nbsp;&nbsp;&nbsp;&nbsp;  
                       <div class="form-group">
-                        <div class="input-group input-group mb-3">
-                          <label for="dateValue1" class="form-control">Batchno </label>
+                        <div class="input-group flex-nowrap mb-3">
+                          <span class="input-group-text" id="basic-addon1">Batchno</span>&nbsp;&nbsp;
+                          <!-- <label for="dateValue1" class="form-control">Batchno </label> -->
                           <select class="form-control" placeholder="Batchno" [(ngModel)]='batchno' id="batchno" name="batchno" *ngIf="BatchData" >
                             <option *ngFor="let machine of BatchData" [value]="machine.batchno">{{machine.batchno}}</option> 
                         </select>
@@ -157,7 +159,7 @@
           <div class="card-body">
           <div class="table-responsive" *ngIf="batchDetail">
             <!-- Projects table -->
-            <table class="table  align-items-center table-flush">
+            <table class="table  align-items-center table-flush " datatable [dtOptions]="dtOptions">
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Timestamp</th>

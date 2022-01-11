@@ -40,8 +40,8 @@ export class AccountService {
         this.router.navigate(['/login']);
     }
 
-    register(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/register`, user,this.noAuthHeader);
+    register(data) {
+        return this.http.post(`${environment.apiUrl}/users/register`,data);
     }
 
     getAll() {

@@ -43,13 +43,14 @@ export class BatchdataComponent implements OnInit {
   dateValue1                        = new Date();
   public id ;
   public univarsalDateFormat        = 'yyyy-MM-dd HH:mm:ss';
-  public meter_data               = [];
-  public machineno                  = 1;
+  public meter_data                 = [];
+  public machineno                  = '';
   public MachineData;
   public BatchData;
   public batchDetail;
   public batchSummary;
-  dtOptions                         : DataTables.Settings = {};
+  title = 'datatables';
+  dtOptions: any = {};
   objectKeys = Object.keys;
   public prm_name ='em1';
   public chartoption = {};
@@ -95,6 +96,12 @@ public batchno='';
 constructor(private datepipe: DatePipe,private MachineMasterService: MachineMasterService,private MeterHistory:FurnacedashService) { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      processing: true,
+      buttons: ['copy', 'print', 'csv','colvis','pdf','excel']
+    };
     this.retrieveMachine();
     this.retrievebatchData();
   }
@@ -103,13 +110,20 @@ constructor(private datepipe: DatePipe,private MachineMasterService: MachineMast
       .subscribe(
         machinedata => {
           this.MachineData=machinedata;
-          this.machineno= this.MachineData[0]['friendly_name'];
+          this.machineno= '';
         },
         error => {
           console.log(error);
         });
   }
   retrievebatchData(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      processing: true,
+      dom: 'Bfrtip',
+      buttons: ['copy', 'print', 'csv','colvis','pdf','excel']
+    };
     this.BatchData=[]
     const data = {
       machineno             : this.machineno,

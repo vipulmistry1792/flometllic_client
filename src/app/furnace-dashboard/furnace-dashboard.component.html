@@ -1,11 +1,27 @@
 <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" >
     <!-- Mask -->
-    <span class="mask bg-gradient-danger opacity-8"></span>
+    <span class="mask bg-gradient-dark opacity-8"></span>
     <!-- Header container -->
     <div class="container-fluid  align-items-center">
       <div class="row">
+        <div class="col-xl-12 col-lg-12" *ngIf="oprator">
+            <div class="card card-stats mb-4 mb-xl-0 col-xl-12">
+              <div class="card-body">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="input-group input-group-alternative mb-3">
+                            <label for="dateValue1" class="form-control">Machine </label>
+                            <select class="form-control" placeholder="MachineName" [(ngModel)]='machinename' id="machinename" name="machinename" *ngIf="MachineData" (change)="onParamChange($event)">
+                              <option *ngFor="let machine of MachineData" [value]="machine.friendly_name">{{machine.machine_name}}</option> 
+                          </select>
+                          </div>
+                      </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- <h1 class="display-2 text-white">Machine Master</h1> -->
-          <div class="col-xl-6 col-lg-6">
+          <div class="col-xl-6 col-lg-6 mt-1" >
             <div class="card card-stats mb-4 mb-xl-0 col-xl-12">
               <div class="card-body">
                 <div class="row">
@@ -17,12 +33,12 @@
               </div>
             </div>
           </div>
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-6 col-lg-6 mt-1">
           <div class="card card-stats mb-4 mb-xl-0">
             <div class="card-body" [ngClass]="{'bg-success': timedata.batchno != '','bg-danger': timedata.batchno == 'Ideal' }">
               <div class="row">
                 <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Heat No :</h5>
+                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">Heat No :</h5>
                   <span class="text-nowrap customtextsize text-white" *ngIf="timedata">{{timedata.batchno}}</span>
                 </div>
               </div>
@@ -42,11 +58,11 @@
         <div class="card-body" id="time" >
             <div class="table-responsive">
                 <!-- Projects table -->
-                <table class="table align-items-center table-flush">
-                    <tbody *ngIf="timedata">
+                <table class="table align-items-center table-flush" [ngClass]="{'': remaintime >= 0,'bg-danger text-white blink_me': remaintime < 0 }">
+                    <tbody *ngIf="timedata" >
                         <tr>
                             <td class="font-weight-bold">Start Time :</td>
-                            <td class="customtextsize">{{timedata.batchstarttime | date:'dd-MM-YY hh:mm:ss':locale}}</td>
+                            <td class="customtextsize">{{timedata.batchstarttime | date:'dd-MM-YY hh:mm':locale}}</td>
                         </tr>
                         <tr>
                             <td class="font-weight-bold">Standard Time :</td>
@@ -56,10 +72,14 @@
                             <td class="font-weight-bold">Running Time :</td>
                             <td class="customtextsize">{{timedata.running_time}} Min.</td>
                         </tr>
-                        <tr [ngClass]="{'': remaintime >= 0,'bg-danger': remaintime < 0 }">
+                        <tr>
 
                             <td class="font-weight-bold" >Remaining Time :</td>
                             <td class="customtextsize" >{{remaintime}} Min.</td>
+                        </tr>
+                        <tr >
+                            <td class="font-weight-bold" >-</td>
+                            <td class="customtextsize" >-</td>
                         </tr>
                       </tbody>
                 </table>
@@ -76,14 +96,6 @@
             <div class="table-responsive">
                 <!-- Projects table -->
                 <table class="table align-items-center table-flush">
-                    <!-- <thead class="thead-light">
-                    <tr>
-                         <th scope="col">                           
-                          </th>
-                          <th scope="col">                            
-                          </th>
-                    </tr>
-                    </thead> -->
                     <tbody *ngIf="timedata">
                         <tr>
                             <td class="font-weight-bold">Set Energy :</td>
@@ -95,11 +107,15 @@
                         </tr>
                         <tr>
                             <td class="font-weight-bold">Today Energy :</td>
-                            <td class="customtextsize">    Kwh</td>
+                            <td class="customtextsize" *ngIf="shiftEnergyData">{{todayenergy}}    Kwh</td>
                         </tr>
                         <tr>
-                            <td class="font-weight-bold">-</td>
-                            <td class="customtextsize">   </td>
+                            <td class="font-weight-bold">Running Shift Energy :</td>
+                            <td class="customtextsize" *ngIf="shiftEnergyData">{{shiftenergy}}    Kwh</td>
+                        </tr>
+                        <tr >
+                            <td class="font-weight-bold" >-</td>
+                            <td class="customtextsize" >-</td>
                         </tr>
                       </tbody>
                 </table>
@@ -123,19 +139,19 @@
                         </tr>
                         <tr>
                             <td class="font-weight-bold">Running Shift :</td>
-                            <td class="customtextsize"></td>
+                            <td class="customtextsize" *ngIf="shiftData">{{shiftData.sh}}</td>
                         </tr>
                         <tr>
                             <td class="font-weight-bold">Current Shift Heat :</td>
-                            <td class="customtextsize"></td>
+                            <td class="customtextsize" *ngIf="shiftEnergyData">{{shiftbatch}}</td>
                         </tr>
                         <tr>
                             <td class="font-weight-bold">Today Total Heat :</td>
-                            <td class="customtextsize"></td>
+                            <td class="customtextsize" *ngIf="shiftEnergyData">{{todaybatch}}</td>
                         </tr>
                         <tr>
-                            <td class="font-weight-bold">Ideal Energy :</td>
-                            <td class="customtextsize"></td>
+                            <td class="font-weight-bold">Today Ideal Energy :</td>
+                            <td class="customtextsize">{{todayidealenergy}}</td>
                         </tr>
                       </tbody>
                 </table>
@@ -143,7 +159,7 @@
         </div>
         </div>
     </div>
-    <div class="col-xl-4 mb-5 mb-xl-0">
+    <div class="col-xl-4 mb-5 mb-xl-0 mt-1" >
         <div class="card  shadow">
         <div class="card-header bg-transparent">
             <h1 class="text-center">Maintenance</h1>

@@ -23,13 +23,12 @@ Exporting(Highcharts);
 const ExportData = require('highcharts/modules/export-data');
 ExportData(Highcharts);
 
-const Accessibility = require('highcharts/modules/accessibility');
 @Component({
-  selector: 'app-energyconsumption',
-  templateUrl: './energyconsumption.component.html',
-  styleUrls: ['./energyconsumption.component.css']
+  selector: 'app-energyconsumptionhourly',
+  templateUrl: './energyconsumptionhourly.component.html',
+  styleUrls: ['./energyconsumptionhourly.component.css']
 })
-export class EnergyconsumptionComponent implements OnInit {
+export class EnergyconsumptionhourlyComponent implements OnInit {
   public datasets                   : any;
   public data                       : any;
   public voltage        : any;
@@ -47,7 +46,7 @@ export class EnergyconsumptionComponent implements OnInit {
   public machineno                  = "";
   public MachineData;
   public headers;
-  public mtype=false;
+  public mtype                       =false;
   dtOptions                         : any = {};
   objectKeys = Object.keys;
   public prm_name ='em1';
@@ -95,11 +94,11 @@ chartOptions_cmp2;
   constructor(private datepipe: DatePipe,private MachineMasterService: MachineMasterService,private MeterHistory:FurnacedashService) { }
 
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 5,
-      processing: true,
-      buttons: ['copy', 'print', 'csv','colvis','pdf','excel']
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        processing: true,
+        buttons: ['copy', 'print', 'csv','colvis','pdf','excel']
     };
     this.retrieveMachine();
   }
@@ -125,7 +124,6 @@ chartOptions_cmp2;
       pagingType: 'full_numbers',
       pageLength: 5,
       processing: true,
-      dom: 'Bfrtip',
       buttons: ['copy', 'print', 'csv','colvis','pdf','excel']
     };
     this.meter_data    = []; 
@@ -168,8 +166,8 @@ chartOptions_cmp2;
         }
       }
     }
-   // console.log(this.headers);
-    this.MeterHistory.getenergyconsuption(data)
+    console.log(this.headers);
+    this.MeterHistory.getenergyconsumptionhourly(data)
     .subscribe(
       machinedata => {       
         this.batchDetail=machinedata;

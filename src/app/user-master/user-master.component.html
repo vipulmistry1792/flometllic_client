@@ -1,0 +1,161 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" >
+    <!-- Mask -->
+    <span class="mask bg-gradient-dark opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+          <!-- <h1 class="display-2 text-white">Machine Master</h1> -->
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="container-fluid mt--7">
+        <div class="row">
+        <div class="col-xl-12 mb-5 mb-xl-0">
+            <div class="card  shadow">
+            <div class="card-header bg-transparent">
+            </div>
+            <div class="card-body">
+              <div class="col-md-6 px-1">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" class="form-control" placeholder="Enetr First Name"  id="firstName" name="firstName" [(ngModel)]='firstName' required>
+                </div>
+              </div>
+              <div class="col-md-6 px-1">
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" class="form-control" placeholder="Enetr Last Name"  id="lastName" name="lastName" [(ngModel)]='lastName' required>
+                </div>
+              </div>
+              <div class="col-md-12 px-1">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control" placeholder="Enetr User Name"  id="username" name="username" [(ngModel)]='username' required>
+                </div>
+              </div>
+              <div class="col-md-12 px-1">
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" placeholder="Enetr Password"  id="password" name="password" [(ngModel)]='password' required>
+                </div>
+              </div>
+              <div class="col-md-12 px-1">
+                <div class="form-group">
+                  <label>Type</label>
+                  <select class="form-control" placeholder="MachineName" [(ngModel)]='Type' id="Type" name="Type"  (change)="onTypeChange($event)">
+                       <option value="0" *ngIf="user.user_control==0">System Admin</option> 
+                       <option value="1">Maneger</option> 
+                       <option value="2">Oprator</option>                      
+                 </select>
+                  <!-- <input type="number" class="form-control" placeholder="Machineno"  id="machineno" name="machineno" [(ngModel)]="machineno" required> -->
+                </div>
+            </div>
+                <div class="col-md-12 px-1" *ngIf="Type!=2">
+                    <div class="form-group">
+                      <label>Machine No</label>
+                      <select class="form-control" placeholder="MachineName" [(ngModel)]='machineno' id="machineno" name="machineno" *ngIf="MachineData">
+                           <option value="All">All</option> 
+                          <option *ngFor="let machine of MachineData" [value]="machine.machineno">{{machine.machine_name}}</option> 
+                     </select>
+                      <!-- <input type="number" class="form-control" placeholder="Machineno"  id="machineno" name="machineno" [(ngModel)]="machineno" required> -->
+                    </div>
+                </div>
+
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                          <button class="btn btn-success btn-round" (click)="AddData()" *ngIf="id === 0">Submit</button>
+                          <button class="btn btn-success btn-round" (click)="UpdateData()" *ngIf="id >= 1">Update</button>
+                      </div>
+                    </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="row mt-5" *ngIf="UserData">
+            <div class="col-xl-12 mb-5 mb-xl-0">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="mb-0 text-center">User Data</h3>
+                    </div>
+                    <!-- <div class="col text-right">
+                    <a href="#!" class="btn btn-sm btn-primary"> all</a>
+                    </div> -->
+                </div>
+                </div>
+                <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                    <tr>
+                          <th scope="col">
+                             SrNo
+                          </th>
+                          <th>
+                            User Name
+                          </th>
+                          <th scope="col">
+                            Password
+                          </th>
+                          <th scope="col">
+                           First Name
+                          </th>
+                          <th scope="col">
+                            Last Name
+                          </th>
+                          <th scope="col">
+                            User Type
+                          </th>
+                          <th scope="col" class="text-right">
+                            Created
+                          </th>
+                          <th scope="col" class="text-right">
+                            Modified
+                          </th>
+                          <th scope="col" class="text-right">
+                            Action
+                          </th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let user of UserData">
+                        <tr >
+                             <th scope="row">
+                                {{user.id}}
+                              </th>
+                              <td>
+                                {{user.username}}
+                              </td>
+                              <td>
+                                {{user.hash}}
+                              </td>
+                              <td>
+                                {{user.firstName}}
+                              </td>
+                              <td>
+                                {{user.lastName}}
+                              </td>
+                              <td>
+                                {{user.user_control}}
+                              </td>
+                              <td class="text-right">
+                                {{user.created}}
+                              </td>
+                              <td class="text-right">
+                                {{user.modified}}
+                              </td>
+                              <td>
+                                <button type="button" class="btn btn-info btn-round btn-sm" (click)="Edit($event,user.id)">Edit</button>
+                                <button type="button" class="btn btn-danger btn-round btn-sm" (click)="Delete($event,user.id)">Delete</button>
+                              </td>
+                        </tr>
+                      </tbody>
+                </table>
+                </div>
+            </div>
+            </div>
+        </div>
+</div>
+

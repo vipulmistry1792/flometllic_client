@@ -28,6 +28,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 // import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
+import { KeysPipe } from './pipes/keys';
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
 //   // interactionPlugin
@@ -42,6 +43,11 @@ import { FurnaceDashboardComponent } from './furnace-dashboard/furnace-dashboard
 import { MeterhistoryComponent } from './meterhistory/meterhistory.component';
 import { EnergyconsumptionComponent } from './energyconsumption/energyconsumption.component';
 import { BatchdataComponent } from './batchdata/batchdata.component';
+import { BatchsummaryComponent } from './batchsummary/batchsummary.component';
+import { EnergyconsumptionhourlyComponent } from './energyconsumptionhourly/energyconsumptionhourly.component';
+import { ShiftmasterComponent } from './shiftmaster/shiftmaster.component';
+import { OnlineDataComponent } from './online-data/online-data.component';
+import { UserMasterComponent } from './user-master/user-master.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -68,6 +74,7 @@ import { BatchdataComponent } from './batchdata/batchdata.component';
   ],
   declarations: [
     AppComponent,
+    KeysPipe,
     AdminLayoutComponent,
     AuthLayoutComponent,
     DashboardComponent,
@@ -78,7 +85,12 @@ import { BatchdataComponent } from './batchdata/batchdata.component';
     FurnaceDashboardComponent,
     MeterhistoryComponent,
     EnergyconsumptionComponent,
-    BatchdataComponent
+    BatchdataComponent,
+    BatchsummaryComponent,
+    EnergyconsumptionhourlyComponent,
+    ShiftmasterComponent,
+    OnlineDataComponent,
+    UserMasterComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

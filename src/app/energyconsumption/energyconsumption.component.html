@@ -1,4 +1,4 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-dark pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
       <div class="header-body">
         <!-- Card stats -->
@@ -31,6 +31,7 @@
                     <div class="input-group input-group-alternative mb-3">
                       <label for="dateValue1" class="form-control">Machine </label>
                       <select class="form-control" placeholder="MachineName" [(ngModel)]='machineno' id="machineno" name="machineno" *ngIf="MachineData" >
+                        <option value="All">All</option>
                         <option *ngFor="let machine of MachineData" [value]="machine.friendly_name">{{machine.machine_name}}</option> 
                     </select>
                     </div>
@@ -45,4 +46,46 @@
         </div>
       </div>
     </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-sm-12 mb-5 mb-xl-0 mt-1">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Energy Consumption</h3>
+            </div>
+            <div class="col text-right">
+              <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+        <div class="table-responsive" *ngIf="batchDetail">
+          <!-- Projects table -->
+          <table class="table  align-items-center table-flush" datatable [dtOptions]="dtOptions" >
+            <thead class="thead-light">
+              <tr >
+                  <th scope="col" *ngFor="let data of headers;let i =index">{{data}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of batchDetail;let j =index">
+                <td >{{data.Date | date:'dd-MM-yy HH:mm:ss':'+0530'}}</td>
+                <td >{{data.energy}}</td>
+                <td *ngIf="mtype">{{data.energy1}}</td>
+                <td *ngIf="mtype">{{data.energy2}}</td>
+                <td *ngIf="mtype">{{data.energy3}}</td>
+                <td *ngIf="mtype">{{data.energy4}}</td>
+                <td *ngIf="mtype">{{data.energy5}}</td>
+                <td *ngIf="mtype">{{data.energy6}}</td>                   
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
 </div>

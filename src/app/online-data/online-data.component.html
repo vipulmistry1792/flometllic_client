@@ -1,0 +1,58 @@
+<div class="header bg-gradient-dark pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+      <div class="header-body">
+        <!-- Card stats -->
+        <div class="row">
+          <!-- <div class="col-xl-12 col-lg-12">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                </div>
+              </div>
+            </div>
+          </div>   -->
+        </div>
+      </div>
+    </div>
+</div>
+<div class="container-fluid mt--7">
+    <div class="row" *ngIf="OnlineData">
+    <div class="col-xl-4 mb-5 mb-xl-0" *ngFor="let data of OnlineData;let j =index" [ngClass]="{'mt-1': j % 3 == 0}">
+        <div class="card  shadow" >
+        <div class="card-header bg-info">
+            <h1 class="text-center customtextsize">{{data.metername}}</h1>
+        </div>
+        <div class="card-body" id="time" >
+            <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                    <tbody *ngIf="OnlineData" >
+                        <tr>
+                            <td class="font-weight-bold">Volatge :</td>
+                            <td class="customtextsize">{{data.voltage | number : '1.2-2'}} V</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Current :</td>
+                            <td class="customtextsize">{{data.current | number : '1.2-2'}} A</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Power :</td>
+                            <td class="customtextsize">{{data.power | number : '1.2-2'}} kw</td>
+                        </tr>
+                        <tr>
+
+                            <td class="font-weight-bold" >Pf :</td>
+                            <td class="customtextsize" >{{data.pf | number : '1.2-2'}} pf</td>
+                        </tr>
+                        <tr >
+                            <td class="font-weight-bold" >kwhr :</td>
+                            <td class="customtextsize" >{{data.kwhr | number : '1.2-2'}} kwhr</td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>

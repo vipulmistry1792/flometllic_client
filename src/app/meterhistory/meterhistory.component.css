@@ -5,13 +5,7 @@
   ::ng-deep .cdk-overlay-container{
     z-index:1200 !important;
 }
-thead, tbody { display: block !important; }
 
-tbody {
-    height: 200px !important;       /* Just for the demo          */
-    overflow-y: auto !important;    /* Trigger vertical scroll    */
-   
-}
 .chart-canvas{
   height: 300px !important;
 }

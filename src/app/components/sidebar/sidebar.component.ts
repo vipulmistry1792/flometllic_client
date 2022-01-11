@@ -10,20 +10,30 @@ declare interface RouteInfo {
     class: string;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/furnace', title: 'Furnace Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },   
-    { path: '/meterhistory', title: 'Meter History',  icon: 'ni-bullet-list-67 text-red', class: '' },
+    { path: '/furnace', title: 'Furnace Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
+    { path: '/runningdata', title: 'Energy Meter',  icon: 'ni-bullet-list-67 text-red', class: '' },   
     { path: '/machine', title: 'Machine Master',  icon: 'ni-bullet-list-67 text-red', class: '' },
+    { path: '/shift', title: 'Shift Master',  icon: 'ni-bullet-list-67 text-red', class: '' },
+    { path: '/user', title: 'User Master',  icon: 'ni-bullet-list-67 text-red', class: '' },
     { path: '/tags', title: 'Tag Master',  icon: 'ni-bullet-list-67 text-red', class: '' },
     { path: '/batch', title: 'Batch Master',  icon: 'ni-bullet-list-67 text-red', class: '' },
+    { path: '/batchdata', title: 'Batch Detail',  icon: 'ni-bullet-list-67 text-red', class: '' },
+    { path: '/batchsummary', title: 'Batch Summary',  icon: 'ni-bullet-list-67 text-red', class: '' },
+    { path: '/meterhistory', title: 'Meter History',  icon: 'ni-bullet-list-67 text-red', class: '' },
     { path: '/energy', title: 'Energy Consumption',  icon: 'ni-bullet-list-67 text-red', class: '' },
-    { path: '/batchdata', title: 'Batch Detail',  icon: 'ni-bullet-list-67 text-red', class: '' }
+    { path: '/energyhourly', title: 'Energy Consumption Hourly',  icon: 'ni-bullet-list-67 text-red', class: '' }
+    
 ];
 export const ROUTES1: RouteInfo[] = [
   { path: '/furnace', title: 'Furnace Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
-  { path: '/meterhistory', title: 'Meter History',  icon: 'ni-bullet-list-67 text-red', class: '' },
+  { path: '/runningdata', title: 'Energy Meter',  icon: 'ni-bullet-list-67 text-red', class: '' },     
   { path: '/batch', title: 'Batch Master',  icon: 'ni-bullet-list-67 text-red', class: '' },
+  { path: '/user', title: 'User Master',  icon: 'ni-bullet-list-67 text-red', class: '' },
+  { path: '/batchdata', title: 'Batch Detail',  icon: 'ni-bullet-list-67 text-red', class: '' },
+  { path: '/batchsummary', title: 'Batch Summary',  icon: 'ni-bullet-list-67 text-red', class: '' },
+  { path: '/meterhistory', title: 'Meter History',  icon: 'ni-bullet-list-67 text-red', class: '' },
   { path: '/energy', title: 'Energy Consumption',  icon: 'ni-bullet-list-67 text-red', class: '' },
-  { path: '/batchdata', title: 'Batch Detail',  icon: 'ni-bullet-list-67 text-red', class: '' }
+  { path: '/energyhourly', title: 'Energy Consumption Hourly',  icon: 'ni-bullet-list-67 text-red', class: '' }
 ];
 export const ROUTES2: RouteInfo[] = [
   { path: '/furnace', title: 'Furnace Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },

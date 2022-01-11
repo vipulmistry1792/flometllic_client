@@ -27,7 +27,7 @@
     "@fullcalendar/angular": "^5.9.0",
     "@fullcalendar/daygrid": "^5.9.0",
     "@juggle/resize-observer": "^3.3.1",
-    "@ng-bootstrap/ng-bootstrap": "^10.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^4.0.1",
     "@swimlane/ngx-datatable": "^20.0.0",
     "ag-grid-angular": "^26.1.0",
     "ag-grid-community": "^26.1.0",

@@ -44,11 +44,11 @@ export class MeterhistoryComponent implements OnInit {
   public id ;
   public univarsalDateFormat        = 'yyyy-MM-dd HH:mm:ss';
   public meter_data               = [];
-  public machineno                  = 1;
+  public machineno                = '';
   public MachineData;
-  dtOptions                         : DataTables.Settings = {};
+  dtOptions                         : any = {};
   objectKeys = Object.keys;
-  public prm_name ='em1';
+  public prm_name ='';
   public chartoption = {};
   public datalabels;
  public colors = ['#5793f3', '#d14a61', '#675bba','#6ab04c','#f9ca24'];
@@ -93,16 +93,18 @@ chartOptions_cmp2;
     this.retrieveMachine();
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
-      processing: true
+      pageLength: 5,
+      processing: true,
+      buttons: ['copy', 'print', 'csv','colvis','pdf','excel']
     };
   }
   retrieveMachine(): void {
+
     this.MachineMasterService.getAll()
       .subscribe(
         machinedata => {
           this.MachineData=machinedata;
-          this.machineno= this.MachineData[0]['friendly_name'];
+          this.machineno= '';
         },
         error => {
           console.log(error);
@@ -110,6 +112,12 @@ chartOptions_cmp2;
   }
   showData()
   {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      processing: true,
+      buttons: ['copy', 'print', 'csv','colvis','pdf','excel']
+    };
     this.meter_data    = []; 
     this.datalabels    = []; 
     this.data          = [];

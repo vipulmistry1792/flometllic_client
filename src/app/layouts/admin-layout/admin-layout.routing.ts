@@ -14,6 +14,11 @@ import { FurnaceDashboardComponent } from '../../furnace-dashboard/furnace-dashb
 import { MeterhistoryComponent } from '../../meterhistory/meterhistory.component';
 import { EnergyconsumptionComponent } from '../../energyconsumption/energyconsumption.component';
 import { BatchdataComponent } from '../../batchdata/batchdata.component';
+import { BatchsummaryComponent } from '../../batchsummary/batchsummary.component';
+import { EnergyconsumptionhourlyComponent } from '../../energyconsumptionhourly/energyconsumptionhourly.component';
+import { ShiftmasterComponent } from '../../shiftmaster/shiftmaster.component';
+import { OnlineDataComponent } from '../../online-data/online-data.component';
+import { UserMasterComponent } from '../../user-master/user-master.component';
 export const AdminLayoutRoutes: Routes = [
    // { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
@@ -26,9 +31,12 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'machine',component:MachineMasterComponent ,canActivate: [AuthGuard] },
     { path: 'tags',component:TagsMasterComponent ,canActivate: [AuthGuard] },
     { path: 'batch',component:BatchMasterComponent ,canActivate: [AuthGuard] },
+    { path: 'batchdata',component:BatchdataComponent ,canActivate: [AuthGuard] },
+    { path: 'batchsummary',component:BatchsummaryComponent ,canActivate: [AuthGuard] },
     { path: 'meterhistory',component:MeterhistoryComponent ,canActivate: [AuthGuard] },
     { path: 'energy',component:EnergyconsumptionComponent ,canActivate: [AuthGuard] },
-    { path: 'batchdata',component:BatchdataComponent ,canActivate: [AuthGuard] }
-
-
+    { path: 'energyhourly',component:EnergyconsumptionhourlyComponent ,canActivate: [AuthGuard] },
+    { path: 'shift',component:ShiftmasterComponent ,canActivate: [AuthGuard] },
+    { path: 'runningdata',component:OnlineDataComponent ,canActivate: [AuthGuard] },
+    { path: 'user',component:UserMasterComponent ,canActivate: [AuthGuard] }
 ];

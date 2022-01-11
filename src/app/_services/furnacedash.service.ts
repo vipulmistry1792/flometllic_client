@@ -21,4 +21,31 @@ export class FurnacedashService {
     
     return this.http.post(`${environment.apiUrl}/furnacedash/history`, data);
   }
+  getbatchdata(data: any): Observable<any> {
+    
+    return this.http.post(`${environment.apiUrl}/furnacedash/getbatch`, data);
+  }
+  getbatchhistorydata(data: any): Observable<any> {
+    
+    return this.http.post(`${environment.apiUrl}/furnacedash/getbatchdetail`, data);
+  }
+  getenergyconsuption(data: any): Observable<any> {
+    
+    return this.http.post(`${environment.apiUrl}/furnacedash/getenergydetail`, data);
+  }
+  getenergyconsumptionhourly(data: any): Observable<any> {
+    
+    return this.http.post(`${environment.apiUrl}/furnacedash/getenergyhourly`, data);
+  }
+  getshiftenergyconsumptionhourly(data: any): Observable<any> {
+    
+    return this.http.post(`${environment.apiUrl}/furnacedash/getshift`, data);
+  }
+  getidealenergyconumption(data: any): Observable<any> {
+    
+    return this.http.post(`${environment.apiUrl}/furnacedash/getidealenergy`, data);
+  }
+  getonlinedata(): Observable<any> {    
+    return this.http.get(`${environment.apiUrl}/furnacedash/online`);
+  }
 }
